@@ -22,7 +22,7 @@ deploy:
 		--serviceaccount=default:dashboard-admin-sa
 
 	# Allow to schedule pods on the control-plane nodes 
-	kubectl taint nodes --all node-role.kubernetes.io/master-
+	kubectl taint nodes --all node-role.kubernetes.io/master- || true
 
 .PHONY: get-auth-token
 get-auth-token:
