@@ -26,8 +26,10 @@ deploy:
 
 .PHONY: get-auth-token
 get-auth-token:
-	# Get Auth Token for k8s dashboard
 	@kubectl describe secret \
-		$(shell kubectl get secrets \
-			| grep dashboard-admin-sa \
-			| cut -d' ' -f1)
+			$(shell kubectl get secrets \
+				| grep dashboard-admin-sa \
+				| cut -d' ' -f1) \
+		| grep 'token:' \
+		| cut -d':' -f2 \
+		| xargs
