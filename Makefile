@@ -1,6 +1,8 @@
+.PHONY: clean
 clean:
 	kind delete cluster
 
+.PHONY: deploy
 deploy:
 	# Create cluster of 3 nodes
 	kind create cluster --config kind-config.yaml
@@ -19,10 +21,9 @@ deploy:
 		--clusterrole=cluster-admin \
 		--serviceaccount=default:dashboard-admin-sa
 
+.PHONY: get-auth-token
 get-auth-token:
 	# Get Auth Token for k8s dashboard
-	# https://localhost:7070
-
 	@kubectl describe secret \
 		$(shell kubectl get secrets \
 			| grep dashboard-admin-sa \
