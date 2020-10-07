@@ -21,6 +21,9 @@ deploy:
 		--clusterrole=cluster-admin \
 		--serviceaccount=default:dashboard-admin-sa
 
+	# Allow to schedule pods on the control-plane nodes 
+	kubectl taint nodes --all node-role.kubernetes.io/master-
+
 .PHONY: get-auth-token
 get-auth-token:
 	# Get Auth Token for k8s dashboard
