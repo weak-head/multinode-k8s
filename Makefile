@@ -2,6 +2,13 @@ CONFIG ?= kind-config.yaml
 CLUSTER_NAME ?= kind
 ACCOUNT ?= dashboard-admin-sa
 
+DASHBOARD_URL = https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml
+KUBELESS_RELEASE = $(shell curl -s https://api.github.com/repos/kubeless/kubeless/releases/latest \
+	| grep tag_name \
+	| cut -d '"' -f 4)
+KUBELESS_URL = https://github.com/kubeless/kubeless/releases/download/${KUBELESS_RELEASE}/kubeless-${KUBELESS_RELEASE}.yaml
+
+
 .PHONY: clean
 clean:
 	kind delete cluster \
@@ -15,7 +22,7 @@ deploy:
 		--config ${CONFIG} 
 
 	# Enable dashboard
-	kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml
+	kubectl apply -f ${DASHBOARD_URL}
 
 	# Forward k8s dashboard to the host machine
 	kubectl apply -f dashboard.yaml
@@ -30,6 +37,11 @@ deploy:
 
 	# Allow to schedule pods on the control-plane nodes 
 	kubectl taint nodes --all node-role.kubernetes.io/master- || true
+
+	# Deploy and enable kubeless
+	kubectl create ns kubeless
+	kubectl create -f ${KUBELESS_URL} 
+
 
 .PHONY: get-auth-token
 get-auth-token:

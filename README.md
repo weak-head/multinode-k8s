@@ -1,7 +1,7 @@
 # Multi-node Kubernetes cluster
 
 This repo provides a simple setup for multi-node Kubernetes cluster.  
-The K8s cluster is based on [kind](https://kind.sigs.k8s.io/) and comes with enabled [Dashboard](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/).
+The K8s cluster is based on [kind](https://kind.sigs.k8s.io/) and comes with enabled [dashboard](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/) and [kubeless](https://kubeless.io/).
 
 ## Deploy Kubernetes cluster
 
@@ -10,7 +10,7 @@ make deploy
 ```
 
 This will deploy k8s cluster of 3 nodes: 1 control plane and 2 worker nodes.  
-The dashboard is available here: https://localhost:7070
+The dashboard could be accessed via: https://localhost:7070
 
 ## Get Auth token
 
