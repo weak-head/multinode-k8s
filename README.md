@@ -3,6 +3,9 @@
 This repo provides a simple setup for multi-node Kubernetes cluster.  
 The K8s cluster is based on [kind](https://kind.sigs.k8s.io/) and comes with enabled [dashboard](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/) and [kubeless](https://kubeless.io/).
 
+You should have [kind](https://kind.sigs.k8s.io/docs/user/quick-start/) and [kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) installed and available in your PATH.  
+To enable optional features you should also have [helm](https://helm.sh/docs/intro/install/).
+
 ## Deploy Kubernetes cluster
 
 ```sh
