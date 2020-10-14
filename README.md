@@ -26,3 +26,17 @@ make get-auth-token
 ```sh
 make clean
 ```
+
+## Optional Features
+
+Enable [Prometheus](https://prometheus.io/) and [Grafana](https://grafana.com/) to monitor the Kubernetes cluster:
+```sh
+# Deploy and enable prometheus & grafana
+make enable-prometheus
+
+# Get grafana username and password
+make get-grafana-auth
+
+# Forward grafana to local host
+kubectl port-forward --namespace prometheus service/prometheus-grafana 3000:80
+```

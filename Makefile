@@ -52,3 +52,33 @@ get-auth-token:
 		| grep 'token:' \
 		| cut -d':' -f2 \
 		| xargs
+
+
+.PHONY: enable-prometheus
+enable-prometheus:
+	# Add stable and community repos
+	helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+	helm repo add stable https://kubernetes-charts.storage.googleapis.com
+	helm repo update
+
+	# Dedicated namespace for prometheus
+	kubectl create namespace prometheus
+
+	# Enable prometheus and grafana
+	helm install prometheus prometheus-community/kube-prometheus-stack \
+		--namespace prometheus
+
+
+.PHONY: get-grafana-auth
+get-grafana-auth:
+	@ kubectl get secret --namespace prometheus prometheus-grafana -o yaml \
+		| grep ' admin-user: ' \
+		| cut -d':' -f2 \
+		| openssl base64 -d \
+		| xargs
+
+	@ kubectl get secret --namespace prometheus prometheus-grafana -o yaml \
+		| grep ' admin-password: ' \
+		| cut -d':' -f2 \
+		| openssl base64 -d \
+		| xargs
