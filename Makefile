@@ -58,7 +58,7 @@ get-auth-token:
 enable-prometheus:
 	# Add stable and community repos
 	helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-	helm repo add stable https://kubernetes-charts.storage.googleapis.com
+	helm repo add stable https://charts.helm.sh/stable
 	helm repo update
 
 	# Dedicated namespace for prometheus
