@@ -43,3 +43,9 @@ make get-grafana-auth
 # Forward grafana to local host
 kubectl port-forward --namespace prometheus service/prometheus-grafana 3000:80
 ```
+
+Enable [keda](https://keda.sh/) for event driven autoscaling:
+```sh
+# Deploy and enable keda
+make enable-keda
+```

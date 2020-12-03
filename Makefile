@@ -14,6 +14,7 @@ clean:
 	kind delete cluster \
 		--name ${CLUSTER_NAME}
 
+
 .PHONY: deploy
 deploy:
 	# Create cluster of 3 nodes
@@ -67,6 +68,20 @@ enable-prometheus:
 	# Enable prometheus and grafana
 	helm install prometheus prometheus-community/kube-prometheus-stack \
 		--namespace prometheus
+
+
+.PHONY: enable-keda
+enable-keda:
+	# Add stable keda repo
+	helm repo add kedacore https://kedacore.github.io/charts
+	helm repo update
+
+	# Dedicated namespace for keda
+	kubectl create namespace keda
+
+	# Enable keda
+	helm install keda kedacore/keda \
+		--namespace keda
 
 
 .PHONY: get-grafana-auth
