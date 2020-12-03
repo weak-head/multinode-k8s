@@ -84,6 +84,20 @@ enable-keda:
 		--namespace keda
 
 
+.PHONY: enable-minio
+enable-minio:
+	# Add minio repo
+	helm repo add minio https://helm.min.io/
+
+	# Dedicated namespace for minio
+	kubectl create namespace minio
+
+	# Enable minio
+	helm install --namespace minio \
+		--set accessKey=myaccesskey,secretKey=mysecretkey \
+		--generate-name minio/minio
+
+
 .PHONY: get-grafana-auth
 get-grafana-auth:
 	@ kubectl get secret --namespace prometheus prometheus-grafana -o yaml \

@@ -32,6 +32,12 @@ make clean
 
 ## Optional Features
 
+* [prometheus & grafana](#prometheus-and-grafana)
+* [keda](#keda)
+* [minio](#minio)
+
+### Prometheus and Grafana
+
 Enable [Prometheus](https://prometheus.io/) and [Grafana](https://grafana.com/) to monitor the Kubernetes cluster:
 ```sh
 # Deploy and enable prometheus & grafana
@@ -44,8 +50,18 @@ make get-grafana-auth
 kubectl port-forward --namespace prometheus service/prometheus-grafana 3000:80
 ```
 
+### Keda
+
 Enable [keda](https://keda.sh/) for event driven autoscaling:
 ```sh
 # Deploy and enable keda
 make enable-keda
+```
+
+### Minio
+
+Enable [minio](https://min.io/) object storage:
+```sh
+# Deploy and enable minio
+make enable-minio
 ```
