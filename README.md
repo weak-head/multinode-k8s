@@ -36,6 +36,7 @@ make clean
 * [keda](#keda)
 * [minio](#minio)
 * [kafka](#kafka)
+* [rabbitmq](#rabbitmq)
 * [prometheus & grafana](#prometheus-and-grafana)
 
 ### Istio
@@ -48,6 +49,8 @@ make enable-istio
 # Access dashboards:
 istioctl dashboard [ kiali | jaeger | grafana | zipkin | prometheus ]
 ```
+
+Istio injection is enabled only in `default` namespace. Injection to all other namespaces should be enabled manually.
 
 ### Keda
 
@@ -69,11 +72,18 @@ Enable [kafka](http://kafka.apache.org/) distributed event streaming platform:
 ```sh
 make enable-kafka
 
-# Forward kafka to local host
+# Forward kafka to the local host
 kubectl port-forward \
     --namespace kafka \
     service/kafka \
     9092:9092
+```
+
+### RabbitMQ
+
+Enable [rabbitmq](https://www.rabbitmq.com/) message broker:
+```sh
+make enable-rabbitmq
 ```
 
 ### Prometheus and Grafana

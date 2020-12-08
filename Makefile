@@ -143,6 +143,25 @@ enable-kafka:
 		kafka bitnami/kafka
 
 
+.PHONY: enable-rabbitmq
+enable-rabbitmq:
+
+	# Bitnami charts
+	helm repo add bitnami https://charts.bitnami.com/bitnami
+
+	# Dedicated namespace for rabbitmq
+	kubectl create namespace rabbitmq
+
+	helm install \
+		--namespace rabbitmq \
+		--set replicaCount=3 \
+		rabbitmq bitnami/rabbitmq
+	
+	# echo "Username      : user"
+	# echo "Password      : $(kubectl get secret --namespace rabbitmq rabbitmq -o jsonpath="{.data.rabbitmq-password}" | base64 --decode)"
+	# echo "ErLang Cookie : $(kubectl get secret --namespace rabbitmq rabbitmq -o jsonpath="{.data.rabbitmq-erlang-cookie}" | base64 --decode)"
+
+
 .PHONY: get-grafana-auth
 get-grafana-auth:
 	@ kubectl get secret --namespace prometheus prometheus-grafana -o yaml \
