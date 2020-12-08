@@ -44,8 +44,8 @@ deploy:
 	kubectl create -f ${KUBELESS_URL} 
 
 
-.PHONY: get-auth-token
-get-auth-token:
+.PHONY: get-dashboard-auth-token
+get-dashboard-auth-token:
 	@kubectl describe secret \
 			$(shell kubectl get secrets \
 				| grep ${ACCOUNT} \
@@ -125,6 +125,22 @@ enable-istio:
 
 	# Enable cert-manager 
 	# kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.1.0/cert-manager.yaml
+
+
+.PHONY: enable-kafka
+enable-kafka:
+
+	# Bitnami charts
+	helm repo add bitnami https://charts.bitnami.com/bitnami
+	helm repo update
+
+	# Dedicated namespace for kafka
+	kubectl create namespace kafka
+
+	helm install \
+		--namespace kafka \
+		--set replicaCount=3 \
+		kafka bitnami/kafka
 
 
 .PHONY: get-grafana-auth

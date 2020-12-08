@@ -15,13 +15,13 @@ make deploy
 This will deploy k8s cluster of 3 nodes: 1 control plane and 2 worker nodes.  
 The dashboard could be accessed via: https://localhost:7070
 
-## Get Auth token
+## Get Dashboard Auth token
 
 To access the dashboard auth token is required.  
 Auth token could be obtained using the following command:
 
 ```sh
-make get-auth-token
+make get-dashboard-auth-token
 ```
 
 ## Delete cluster
@@ -35,12 +35,13 @@ make clean
 * [istio](#istio)
 * [keda](#keda)
 * [minio](#minio)
+* [kafka](#kafka)
 * [prometheus & grafana](#prometheus-and-grafana)
 
 ### Istio
 
 Download and install [istio release](https://istio.io/latest/docs/setup/getting-started/#download).
-After `istioctl` is in PATH, run the following:
+After `istioctl` is in the PATH, run the following to install istio to the local cluster:
 ```sh
 make enable-istio
 
@@ -52,7 +53,6 @@ istioctl dashboard [ kiali | jaeger | grafana | zipkin | prometheus ]
 
 Enable [keda](https://keda.sh/) for event driven autoscaling:
 ```sh
-# Deploy and enable keda
 make enable-keda
 ```
 
@@ -60,20 +60,34 @@ make enable-keda
 
 Enable [minio](https://min.io/) object storage:
 ```sh
-# Deploy and enable minio
 make enable-minio
+```
+
+### Kafka
+
+Enable [kafka](http://kafka.apache.org/) distributed event streaming platform:
+```sh
+make enable-kafka
+
+# Forward kafka to local host
+kubectl port-forward \
+    --namespace kafka \
+    service/kafka \
+    9092:9092
 ```
 
 ### Prometheus and Grafana
 
 Enable [Prometheus](https://prometheus.io/) and [Grafana](https://grafana.com/) to monitor the Kubernetes cluster:
 ```sh
-# Deploy and enable prometheus & grafana
 make enable-prometheus
 
 # Get grafana username and password
 make get-grafana-auth
 
 # Forward grafana to local host
-kubectl port-forward --namespace prometheus service/prometheus-grafana 3000:80
+kubectl port-forward \
+    --namespace prometheus \
+    service/prometheus-grafana \
+    3000:80
 ```
