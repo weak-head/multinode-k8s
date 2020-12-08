@@ -98,6 +98,35 @@ enable-minio:
 		--generate-name minio/minio
 
 
+.PHONY: enable-istio
+enable-istio:
+
+	# Install istio
+	istioctl install --set profile=demo -y
+
+	# Enable istio injection
+	kubectl label namespace default istio-injection=enabled
+
+	# Enable kiali (need to apply twice)
+	kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.8/samples/addons/kiali.yaml | true
+	kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.8/samples/addons/kiali.yaml
+
+	# Enable prometheus
+	kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.8/samples/addons/prometheus.yaml
+
+	# Enable grafana
+	kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.8/samples/addons/grafana.yaml
+
+	# Enable jaeger 
+	kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.8/samples/addons/jaeger.yaml
+
+	# Enable zipkin
+	kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.8/samples/addons/extras/zipkin.yaml
+
+	# Enable cert-manager 
+	# kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.1.0/cert-manager.yaml
+
+
 .PHONY: get-grafana-auth
 get-grafana-auth:
 	@ kubectl get secret --namespace prometheus prometheus-grafana -o yaml \

@@ -32,22 +32,20 @@ make clean
 
 ## Optional Features
 
-* [prometheus & grafana](#prometheus-and-grafana)
+* [istio](#istio)
 * [keda](#keda)
 * [minio](#minio)
+* [prometheus & grafana](#prometheus-and-grafana)
 
-### Prometheus and Grafana
+### Istio
 
-Enable [Prometheus](https://prometheus.io/) and [Grafana](https://grafana.com/) to monitor the Kubernetes cluster:
+Download and install [istio release](https://istio.io/latest/docs/setup/getting-started/#download).
+After `istioctl` is in PATH, run the following:
 ```sh
-# Deploy and enable prometheus & grafana
-make enable-prometheus
+make enable-istio
 
-# Get grafana username and password
-make get-grafana-auth
-
-# Forward grafana to local host
-kubectl port-forward --namespace prometheus service/prometheus-grafana 3000:80
+# Access dashboards:
+istioctl dashboard [ kiali | jaeger | grafana | zipkin | prometheus ]
 ```
 
 ### Keda
@@ -64,4 +62,18 @@ Enable [minio](https://min.io/) object storage:
 ```sh
 # Deploy and enable minio
 make enable-minio
+```
+
+### Prometheus and Grafana
+
+Enable [Prometheus](https://prometheus.io/) and [Grafana](https://grafana.com/) to monitor the Kubernetes cluster:
+```sh
+# Deploy and enable prometheus & grafana
+make enable-prometheus
+
+# Get grafana username and password
+make get-grafana-auth
+
+# Forward grafana to local host
+kubectl port-forward --namespace prometheus service/prometheus-grafana 3000:80
 ```
