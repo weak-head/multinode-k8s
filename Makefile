@@ -127,6 +127,21 @@ enable-istio:
 	# kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.1.0/cert-manager.yaml
 
 
+.PHONY: enable-spark
+enable-spark:
+
+	# Bitnami charts
+	helm repo add bitnami https://charts.bitnami.com/bitnami
+	helm repo update
+
+	# Dedicated namespace for spark
+	kubectl create namespace spark
+
+	helm install \
+		--namespace spark \
+		spark bitnami/spark
+
+
 .PHONY: enable-kafka
 enable-kafka:
 

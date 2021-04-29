@@ -35,6 +35,7 @@ make clean
 * [istio](#istio)
 * [keda](#keda)
 * [minio](#minio)
+* [spark](#spark)
 * [kafka](#kafka)
 * [rabbitmq](#rabbitmq)
 * [prometheus & grafana](#prometheus-and-grafana)
@@ -64,6 +65,19 @@ make enable-keda
 Enable [minio](https://min.io/) object storage:
 ```sh
 make enable-minio
+```
+
+### Spark
+
+Enable [spark](https://spark.apache.org/) distributed processing system:
+```sh
+make enable-spark
+
+# Forward spark master to the local host
+kubectl port-forward \
+    --namespace spark \
+    svc/spark-master-svc \
+    8080:80
 ```
 
 ### Kafka
